@@ -1,0 +1,82 @@
+#!/bin/bash
+
+###############################################################################
+# APK Decompiler Script
+# Decompiles APK files using jadx and apktool
+###############################################################################
+
+if [ -z "$1" ]; then
+    echo "❌ Usage: ./decompile-apk.sh <path-to-apk-file>"
+    echo ""
+    echo "Example:"
+    echo "  ./decompile-apk.sh myapp.apk"
+    exit 1
+fi
+
+APK_FILE="$1"
+
+if [ ! -f "$APK_FILE" ]; then
+    echo "❌ Error: APK file not found: $APK_FILE"
+    exit 1
+fi
+
+# Get APK filename without extension
+APK_NAME=$(basename "$APK_FILE" .apk)
+OUTPUT_DIR="./decompiled/${APK_NAME}"
+RESOURCES_DIR="./decompiled/${APK_NAME}_resources"
+
+echo "🔍 APK Audit Tool - Decompiler"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "APK File: $APK_FILE"
+echo "Output Directory: $OUTPUT_DIR"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
+
+# Check if tools are installed
+if ! command -v jadx &> /dev/null; then
+    echo "❌ jadx not found. Install with: brew install jadx"
+    exit 1
+fi
+
+if ! command -v apktool &> /dev/null; then
+    echo "❌ apktool not found. Install with: brew install apktool"
+    exit 1
+fi
+
+# Create output directories
+mkdir -p "./decompiled"
+
+echo "📦 Step 1: Decompiling with JADX (DEX to Java/Kotlin)..."
+jadx -d "$OUTPUT_DIR" "$APK_FILE" --show-bad-code
+
+if [ $? -eq 0 ]; then
+    echo "✅ JADX decompilation complete"
+else
+    echo "❌ JADX decompilation failed"
+    exit 1
+fi
+
+echo ""
+echo "📦 Step 2: Extracting resources with apktool..."
+apktool d "$APK_FILE" -o "$RESOURCES_DIR" -f
+
+if [ $? -eq 0 ]; then
+    echo "✅ Resource extraction complete"
+else
+    echo "❌ Resource extraction failed"
+    exit 1
+fi
+
+echo ""
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "✅ Decompilation Complete!"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
+echo "📁 Source Code: $OUTPUT_DIR"
+echo "📁 Resources: $RESOURCES_DIR"
+echo ""
+echo "Next steps:"
+echo "1. Review AndroidManifest.xml: $RESOURCES_DIR/AndroidManifest.xml"
+echo "2. Check for hardcoded secrets in source code"
+echo "3. Run security audit: ./audit-apk.sh $APK_FILE"
+echo ""
