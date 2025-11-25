@@ -5,6 +5,27 @@
 # Decompiles APK files using jadx and apktool
 ###############################################################################
 
+# Auto-setup tools if not present
+if [ ! -d "./tools/jadx" ] || [ ! -f "./tools/apktool.jar" ]; then
+    echo "⚠️  Tools not found. Running setup..."
+    ./setup-tools.sh || exit 1
+    echo ""
+fi
+
+# Check for Java
+if ! /usr/libexec/java_home >/dev/null 2>&1; then
+    echo "⚠️  Java not found. Please install Java:"
+    echo "  ./INSTALL-JAVA.sh"
+    echo ""
+    echo "Or install manually:"
+    echo "  brew install --cask temurin"
+    exit 1
+fi
+
+# Use bundled tools
+JADX="./tools/jadx/bin/jadx"
+APKTOOL="java -jar ./tools/apktool.jar"
+
 if [ -z "$1" ]; then
     echo "❌ Usage: ./decompile-apk.sh <path-to-apk-file>"
     echo ""
@@ -32,22 +53,11 @@ echo "Output Directory: $OUTPUT_DIR"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
 
-# Check if tools are installed
-if ! command -v jadx &> /dev/null; then
-    echo "❌ jadx not found. Install with: brew install jadx"
-    exit 1
-fi
-
-if ! command -v apktool &> /dev/null; then
-    echo "❌ apktool not found. Install with: brew install apktool"
-    exit 1
-fi
-
 # Create output directories
 mkdir -p "./decompiled"
 
 echo "📦 Step 1: Decompiling with JADX (DEX to Java/Kotlin)..."
-jadx -d "$OUTPUT_DIR" "$APK_FILE" --show-bad-code
+$JADX -d "$OUTPUT_DIR" "$APK_FILE" --show-bad-code
 
 if [ $? -eq 0 ]; then
     echo "✅ JADX decompilation complete"
@@ -58,7 +68,7 @@ fi
 
 echo ""
 echo "📦 Step 2: Extracting resources with apktool..."
-apktool d "$APK_FILE" -o "$RESOURCES_DIR" -f
+$APKTOOL d "$APK_FILE" -o "$RESOURCES_DIR" -f
 
 if [ $? -eq 0 ]; then
     echo "✅ Resource extraction complete"
