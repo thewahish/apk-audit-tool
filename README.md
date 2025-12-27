@@ -1,5 +1,8 @@
 # APK Audit Tool
 
+**Domain:** Business-Tools
+**Status:** Active
+
 Comprehensive Android APK analysis, decompilation, and security audit tool.
 
 **Self-contained and automatic!** Tools download on first use.
@@ -54,6 +57,19 @@ cat reports/*_audit_*.txt
 - **Code Analysis**: Review architecture, dependencies, and code quality
 - **Automated Reports**: Detailed text reports in `./reports/`
 
+## Project Structure
+
+```
+apk-audit-tool/
+├── decompile-apk.sh        # Main decompilation script
+├── audit-apk.sh            # Security audit script
+├── setup-tools.sh          # Tool setup script
+├── INSTALL-JAVA.sh         # Java installation helper
+├── tools/                  # Downloaded tools (auto)
+├── decompiled/             # Decompiled output
+└── reports/                # Audit reports
+```
+
 ## Auto-Downloaded Tools
 
 - **jadx** (v1.5.0) - DEX to Java/Kotlin decompiler
@@ -67,44 +83,15 @@ Tools auto-download on first use (~130MB, one-time).
 - **Java JDK** - Run `./INSTALL-JAVA.sh` to install
 - macOS (tested on Apple Silicon)
 
-## Usage
+## Tech Stack
 
-```bash
-# First time setup
-./INSTALL-JAVA.sh       # Install Java JDK
-./setup-tools.sh        # Download jadx & apktool (~130MB)
+- Shell Scripts (Bash)
+- Java JDK 17+
+- jadx, apktool
 
-# Analyze APK (tools auto-download if skipped setup)
-./decompile-apk.sh myapp.apk
-./audit-apk.sh myapp.apk
+## GitHub Repository
 
-# View results
-open decompiled/                    # View decompiled source
-cat reports/myapp_audit_*.txt       # View security report
-```
-
-## Output Structure
-
-```
-apk-audit-tool/
-├── decompiled/
-│   └── app-name/          # Decompiled Java/Kotlin source
-│       └── sources/
-├── decompiled/
-│   └── app-name_resources/ # Extracted resources & AndroidManifest.xml
-└── reports/
-    └── app-name_audit_*.txt # Security audit report
-```
-
-## Project Status
-
-Track progress in `quest-status.json` and view on the master dashboard.
-
-## Sync to GitHub
-
-```bash
-./sync-github.sh
-```
+[https://github.com/thewahish/apk-audit-tool](https://github.com/thewahish/apk-audit-tool)
 
 ## Troubleshooting
 
@@ -125,3 +112,7 @@ chmod +x *.sh
 java -version
 # Should show Java 17 or higher
 ```
+
+---
+
+**Last Updated:** December 23, 2025

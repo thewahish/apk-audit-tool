@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APK Audit Tool - README</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; max-width: 900px; margin: 0 auto; padding: 40px 20px; background: #f8f9fa; }
+        h1 { color: #2c3e50; border-bottom: 3px solid #e74c3c; padding-bottom: 15px; margin-bottom: 20px; }
+        h2 { color: #34495e; margin-top: 30px; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 1px solid #ecf0f1; }
+        p { margin-bottom: 15px; }
+        ul, ol { margin-bottom: 15px; padding-left: 30px; }
+        li { margin-bottom: 8px; }
+        code { background: #ecf0f1; padding: 2px 6px; border-radius: 3px; font-family: 'Monaco', 'Menlo', monospace; font-size: 0.9em; }
+        pre { background: #2c3e50; color: #ecf0f1; padding: 20px; border-radius: 8px; overflow-x: auto; margin: 15px 0; }
+        pre code { background: none; padding: 0; color: inherit; }
+        a { color: #3498db; text-decoration: none; }
+        .card { background: white; border-radius: 8px; padding: 25px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .tech-stack { display: flex; flex-wrap: wrap; gap: 10px; margin: 15px 0; }
+        .tech-badge { background: #e74c3c; color: white; padding: 5px 12px; border-radius: 20px; font-size: 0.85em; }
+        .github-link { display: inline-block; background: #24292e; color: white; padding: 10px 20px; border-radius: 6px; margin: 10px 0; }
+        footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #ecf0f1; color: #7f8c8d; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>APK Audit Tool</h1>
+        <p><strong>Domain:</strong> Business-Tools | <strong>Status:</strong> Active</p>
+        <p>Comprehensive Android APK analysis, decompilation, and security audit tool. Self-contained and automatic!</p>
+    </div>
+
+    <div class="card">
+        <h2>Features</h2>
+        <ul>
+            <li><strong>Decompilation:</strong> Extract and decompile APK files to readable source code</li>
+            <li><strong>Security Audit:</strong> 7-point automated security analysis</li>
+            <li><strong>Hardcoded Secrets:</strong> Detect API keys, passwords, tokens</li>
+            <li><strong>Permissions Analysis:</strong> Review Android permissions</li>
+            <li><strong>Network Security:</strong> Find insecure HTTP URLs</li>
+            <li><strong>Automated Reports:</strong> Detailed text reports</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>Quick Start</h2>
+        <pre><code># Install Java
+./INSTALL-JAVA.sh
+
+# Decompile APK
+./decompile-apk.sh your-app.apk
+
+# Run security audit
+./audit-apk.sh your-app.apk
+
+# View report
+cat reports/*_audit_*.txt</code></pre>
+    </div>
+
+    <div class="card">
+        <h2>Tech Stack</h2>
+        <div class="tech-stack">
+            <span class="tech-badge">Bash Scripts</span>
+            <span class="tech-badge">Java JDK 17+</span>
+            <span class="tech-badge">jadx</span>
+            <span class="tech-badge">apktool</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Project Structure</h2>
+        <pre><code>apk-audit-tool/
+├── decompile-apk.sh        # Decompilation script
+├── audit-apk.sh            # Security audit script
+├── setup-tools.sh          # Tool setup
+├── tools/                  # Downloaded tools
+├── decompiled/             # Output
+└── reports/                # Audit reports</code></pre>
+    </div>
+
+    <div class="card">
+        <h2>GitHub Repository</h2>
+        <a href="https://github.com/thewahish/apk-audit-tool" class="github-link">View on GitHub</a>
+    </div>
+
+    <footer>
+        <p><strong>Last Updated:</strong> December 23, 2025</p>
+    </footer>
+</body>
+</html>
